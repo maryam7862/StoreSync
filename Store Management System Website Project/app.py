@@ -14,9 +14,23 @@ CORS(app)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+def check_db():
+    """Check if database is available"""
+    if db is None:
+        return jsonify({
+            "success": False, 
+            "error": "Database not available. Using SQLite on Vercel requires a cloud database like PostgreSQL."
+        }), 503
+    return None
+
 @app.route('/api/health')
 def health_check():
-    return jsonify({"status": "ok"})
+    db_status = "available" if db else "unavailable (requires cloud database)"
+    return jsonify({
+        "status": "ok",
+        "database": db_status,
+        "environment": os.getenv("VERCEL_ENV", "local")
+    })
 
 
 @app.route("/")
@@ -40,12 +54,18 @@ def serve_static(filename):
 
 @app.route("/api/products", methods=["GET"])
 def api_get_products():
+    db_error = check_db()
+    if db_error:
+        return db_error
     products = db.get_all_products()
     return jsonify({"success": True, "products": products})
 
 
 @app.route("/api/orders", methods=["POST"])
 def api_create_order():
+    db_error = check_db()
+    if db_error:
+        return db_error
     data = request.get_json() or {}
     user = data.get('user')
     user_id = None
@@ -67,6 +87,9 @@ def api_create_order():
 
 @app.route("/api/orders", methods=["GET"])
 def api_get_orders():
+    db_error = check_db()
+    if db_error:
+        return db_error
     # optional ?user_id=
     user_id = request.args.get('user_id')
     try:
@@ -82,6 +105,9 @@ def api_get_orders():
 
 @app.route("/api/register", methods=["POST"])
 def register_api():
+    db_error = check_db()
+    if db_error:
+        return db_error
     data = request.get_json() or {}
     username = data.get('username')
     email = data.get('email')
@@ -104,6 +130,9 @@ def register_api():
 
 @app.route("/api/login", methods=["POST"])
 def login_api():
+    db_error = check_db()
+    if db_error:
+        return db_error
     data = request.get_json() or {}
     username = data.get('username')
     password = data.get('password')
@@ -123,3 +152,4 @@ def login_api():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
+
