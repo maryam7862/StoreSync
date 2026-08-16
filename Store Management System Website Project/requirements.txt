@@ -1,0 +1,6 @@
+Flask==2.3.2
+Flask-Cors==3.0.10
+bcrypt==4.0.1
+
+# Optional for sqlite browser CLI:
+# sqlite3 is included with Python standard library

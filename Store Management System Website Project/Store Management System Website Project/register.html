@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreSync - Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --customer: #7209b7;
+            --manager: #f8961e;
+            --admin: #d90429;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 95vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .left-panel {
+            flex: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .welcome-bid {
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            margin: 30px 0;
+            z-index: 1;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .benefit-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .benefit-content p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            z-index: 1;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .copyright {
+            font-size: 14px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow-y: auto;
+        }
+
+        .register-header {
+            margin-bottom: 30px;
+        }
+
+        .register-header h2 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .register-header p {
+            color: var(--gray);
+        }
+
+        /* Registration Steps */
+        .registration-steps {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .registration-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: var(--light-gray);
+            z-index: 1;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border: 2px solid var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step.completed .step-number {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .step.active .step-label {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Registration Form */
+        .form-container {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-section {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .form-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .form-section h3 i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* Role Selection */
+        .role-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .role-option {
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .role-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-option.selected {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .role-option.customer.selected {
+            border-color: var(--customer);
+            background: rgba(114, 9, 183, 0.05);
+        }
+
+        .role-option.manager.selected {
+            border-color: var(--manager);
+            background: rgba(248, 150, 30, 0.05);
+        }
+
+        .role-option.admin.selected {
+            border-color: var(--admin);
+            background: rgba(217, 4, 41, 0.05);
+        }
+
+        .role-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 20px;
+            color: white;
+        }
+
+        .customer .role-icon { background: var(--customer); }
+        .manager .role-icon { background: var(--manager); }
+        .admin .role-icon { background: var(--admin); }
+
+        .role-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+
+        .role-desc {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Terms & Conditions */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            margin: 25px 0;
+        }
+
+        .terms-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+
+        .terms-group label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .terms-group a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .terms-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            flex: 2;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            flex: 1;
+            border: 2px solid var(--light-gray);
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gray);
+        }
+
+        .btn-next, .btn-prev {
+            min-width: 120px;
+        }
+
+        .btn-register {
+            width: 100%;
+        }
+
+        /* Messages */
+        .success-message {
+            background: #e7f7ef;
+            color: #06d6a0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: var(--admin);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .error-message i {
+            margin-right: 10px;
+        }
+
+        .password-strength {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .strength-bar {
+            height: 5px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        .strength-weak { width: 33%; background: var(--warning); }
+        .strength-medium { width: 66%; background: var(--manager); }
+        .strength-strong { width: 100%; background: var(--success); }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            right: 10%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            left: 5%;
+            animation: float 25s infinite linear reverse;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 15%;
+            animation: float 18s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--gray);
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                margin: 20px;
+            }
+
+            .left-panel {
+                padding: 30px;
+            }
+
+            .right-panel {
+                padding: 30px;
+            }
+
+            .welcome-bid {
+                font-size: 28px;
+            }
+
+            .role-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="registerPage">
+        <div class="left-panel">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div>
+                <div class="logo">
+                    <i class="fas fa-store"></i> StoreSync
+                </div>
+                
+                <div class="welcome-bid">
+                    Join StoreSync Today
+                </div>
+                
+                <p class="welcome-subtitle">
+                    Create your account and start managing your store efficiently
+                </p>
+
+                <!-- Benefits Section -->
+                <div class="benefits-section">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Quick Setup</h4>
+                            <p>Get started in minutes with our intuitive interface</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Secure & Reliable</h4>
+                            <p>Bank-level security for all your store data</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h4>Powerful Analytics</h4>
+                            <p>Make data-driven decisions with real-time insights</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">22.3K</span>
+                        <span class="stat-label">Stores Managed</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.8%</span>
+                        <span class="stat-label">Satisfaction</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                © 2024 StoreSync Store Management System
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="register-header">
+                <h2>Create Your Account</h2>
+                <p>Join thousands of stores using StoreSync</p>
+            </div>
+
+            <!-- Registration Steps -->
+            <div class="registration-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Account Info</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Role Select</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Complete</div>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText">Registration successful! Redirecting to login...</span>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText">Please fill all required fields</span>
+            </div>
+
+            <!-- Step 1: Account Information -->
+            <div class="form-container active" id="step1">
+                <div class="form-section">
+                    <h3><i class="fas fa-user-circle"></i> Personal Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" class="form-control" placeholder="Enter first name" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" class="form-control" placeholder="Enter last name" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" class="form-control" placeholder="Enter email address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" class="form-control" placeholder="Enter phone number">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-lock"></i> Security Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-at"></i>
+                            <input type="text" id="username" class="form-control" placeholder="Choose a username" required>
+                        </div>
+                        <div class="username-availability" id="usernameAvailability" style="font-size: 12px; margin-top: 5px;"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" class="form-control" placeholder="Create a strong password" required>
+                            <span class="password-toggle" id="togglePassword1">
+                                <i class="far fa-eye"></i>
+                            </span>
+                        </div>
+                        <div class="password-strength">
+                            <div>Password strength: <span id="passwordStrength">Weak</span></div>
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password *</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm your password" required>
+                            <span class="password-toggle" id="togglePassword2">
+                                <i class="far fa-eye"></i>
+                            </span>
+                        </div>
+                        <div id="passwordMatch" style="font-size: 12px; margin-top: 5px;"></div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary btn-prev" disabled>
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next" id="nextToStep2">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Role Selection -->
+            <div class="form-container" id="step2">
+                <div class="form-section">
+                    <h3><i class="fas fa-user-tag"></i> Select Your Role</h3>
+                    <p style="color: var(--gray); margin-bottom: 20px; font-size: 14px;">
+                        Choose the type of account that best fits your needs. You can change this later.
+                    </p>
+
+                    <div class="role-selection">
+                        <!-- Customer Role -->
+                        <div class="role-option customer" data-role="customer">
+                            <div class="role-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="role-name">Customer</div>
+                            <div class="role-desc">Browse products, place orders, track shipments</div>
+                            <div style="margin-top: 10px; font-size: 12px; color: var(--customer);">
+                                <i class="fas fa-check-circle"></i> Recommended for shoppers
+                            </div>
+                        </div>
+
+                        <!-- Manager Role -->
+                        <div class="role-option manager" data-role="manager">
+                            <div class="role-icon">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div class="role-name">Store Manager</div>
+                            <div class="role-desc">Manage inventory, staff, and daily operations</div>
+                            <div style="margin-top: 10px; font-size: 12px; color: var(--manager);">
+                                <i class="fas fa-check-circle"></i> For store administrators
+                            </div>
+                        </div>
+
+                        <!-- Admin Role -->
+                        <div class="role-option admin" data-role="admin">
+                            <div class="role-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div class="role-name">Administrator</div>
+                            <div class="role-desc">Full system access, user management, analytics</div>
+                            <div style="margin-top: 10px; font-size: 12px; color: var(--admin);">
+                                <i class="fas fa-check-circle"></i> For system administrators
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="selectedRole" value="customer">
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-store"></i> Store Information (Optional)</h3>
+                    
+                    <div class="form-group">
+                        <label for="storeName">Store Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-store"></i>
+                            <input type="text" id="storeName" class="form-control" placeholder="Enter store name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="storeType">Store Type</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-tag"></i>
+                            <select id="storeType" class="form-control">
+                                <option value="">Select store type</option>
+                                <option value="retail">Retail Store</option>
+                                <option value="ecommerce">E-commerce</option>
+                                <option value="wholesale">Wholesale</option>
+                                <option value="grocery">Grocery</option>
+                                <option value="fashion">Fashion</option>
+                                <option value="electronics">Electronics</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary btn-prev" id="prevToStep1">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next" id="nextToStep3">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Review & Complete -->
+            <div class="form-container" id="step3">
+                <div class="form-section">
+                    <h3><i class="fas fa-clipboard-check"></i> Review Your Information</h3>
+                    
+                    <div class="review-section" style="background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <div class="review-item" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--light-gray);">
+                            <div style="font-weight: 600; color: var(--dark); margin-bottom: 5px;">Personal Information</div>
+                            <div style="color: var(--gray); font-size: 14px;">
+                                <span id="reviewName"></span> • <span id="reviewEmail"></span> • <span id="reviewPhone"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-item" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--light-gray);">
+                            <div style="font-weight: 600; color: var(--dark); margin-bottom: 5px;">Account Information</div>
+                            <div style="color: var(--gray); font-size: 14px;">
+                                Username: <span id="reviewUsername"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="review-item" style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--light-gray);">
+                            <div style="font-weight: 600; color: var(--dark); margin-bottom: 5px;">Role Selected</div>
+                            <div style="color: var(--gray); font-size: 14px;">
+                                <span id="reviewRole"></span>
+                                <div id="reviewStoreInfo" style="margin-top: 5px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="terms-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">
+                            I agree to the <a href="#" id="termsLink">Terms of Service</a> and <a href="#" id="privacyLink">Privacy Policy</a> *
+                        </label>
+                    </div>
+
+                    <div class="terms-group">
+                        <input type="checkbox" id="newsletter">
+                        <label for="newsletter">
+                            I want to receive updates, promotions, and newsletters from StoreSync
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary btn-prev" id="prevToStep2">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-register" id="registerBtn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+            </div>
+
+            <div class="login-link">
+                Already have an account? <a href="index.html" id="loginLink">Login here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const registerForm = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const errorText = document.getElementById('errorText');
+        const successText = document.getElementById('successText');
+        const steps = document.querySelectorAll('.step');
+        const formContainers = document.querySelectorAll('.form-container');
+        const roleOptions = document.querySelectorAll('.role-option');
+        const selectedRoleInput = document.getElementById('selectedRole');
+        
+        // Password toggles
+        const togglePassword1 = document.getElementById('togglePassword1');
+        const togglePassword2 = document.getElementById('togglePassword2');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        
+        // Form fields
+        const firstName = document.getElementById('firstName');
+        const lastName = document.getElementById('lastName');
+        const email = document.getElementById('email');
+        const phone = document.getElementById('phone');
+        const username = document.getElementById('username');
+        const storeName = document.getElementById('storeName');
+        const storeType = document.getElementById('storeType');
+        
+        // Review elements
+        const reviewName = document.getElementById('reviewName');
+        const reviewEmail = document.getElementById('reviewEmail');
+        const reviewPhone = document.getElementById('reviewPhone');
+        const reviewUsername = document.getElementById('reviewUsername');
+        const reviewRole = document.getElementById('reviewRole');
+        const reviewStoreInfo = document.getElementById('reviewStoreInfo');
+        
+        // Buttons
+        const nextToStep2 = document.getElementById('nextToStep2');
+        const nextToStep3 = document.getElementById('nextToStep3');
+        const prevToStep1 = document.getElementById('prevToStep1');
+        const prevToStep2 = document.getElementById('prevToStep2');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        // Links
+        const loginLink = document.getElementById('loginLink');
+        const termsLink = document.getElementById('termsLink');
+        const privacyLink = document.getElementById('privacyLink');
+        
+        // Password strength
+        const passwordStrength = document.getElementById('passwordStrength');
+        const strengthFill = document.getElementById('strengthFill');
+        const passwordMatch = document.getElementById('passwordMatch');
+        const usernameAvailability = document.getElementById('usernameAvailability');
+        
+        // Current step
+        let currentStep = 1;
+        
+        // Simulated existing usernames (in real app, this would come from backend)
+        const existingUsernames = ['demo_customer', 'demo_manager', 'demo_admin', 'customer_john', 'manager_sarah', 'admin_alex'];
+        
+        // Role descriptions
+        const roleDescriptions = {
+            customer: 'Customer - Browse products and place orders',
+            manager: 'Store Manager - Manage store operations',
+            admin: 'Administrator - Full system access'
+        };
+        
+        // Store type descriptions
+        const storeTypeDescriptions = {
+            retail: 'Retail Store',
+            ecommerce: 'E-commerce Store',
+            wholesale: 'Wholesale Business',
+            grocery: 'Grocery Store',
+            fashion: 'Fashion Store',
+            electronics: 'Electronics Store',
+            other: 'Other Business'
+        };
+        
+        // Initialize
+        function init() {
+            // Set default role
+            selectRole('customer');
+            
+            // Add event listeners
+            setupEventListeners();
+            
+            // Initialize floating shapes
+            initFloatingShapes();
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Step navigation
+            nextToStep2.addEventListener('click', () => navigateToStep(2));
+            nextToStep3.addEventListener('click', () => navigateToStep(3));
+            prevToStep1.addEventListener('click', () => navigateToStep(1));
+            prevToStep2.addEventListener('click', () => navigateToStep(2));
+            
+            // Register button
+            registerBtn.addEventListener('click', registerUser);
+            
+            // Role selection
+            roleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const role = this.dataset.role;
+                    selectRole(role);
+                });
+            });
+            
+            // Password visibility toggles
+            togglePassword1.addEventListener('click', () => togglePasswordVisibility(passwordInput, togglePassword1));
+            togglePassword2.addEventListener('click', () => togglePasswordVisibility(confirmPasswordInput, togglePassword2));
+            
+            // Form validation
+            username.addEventListener('input', checkUsernameAvailability);
+            passwordInput.addEventListener('input', checkPasswordStrength);
+            confirmPasswordInput.addEventListener('input', checkPasswordMatch);
+            
+            // Terms and privacy links
+            termsLink.addEventListener('click', showTermsModal);
+            privacyLink.addEventListener('click', showPrivacyModal);
+            
+            // Login link
+            loginLink.addEventListener('click', goToLogin);
+        }
+        
+        // Navigate between steps
+        function navigateToStep(step) {
+            // Validate current step before proceeding
+            if (step > currentStep && !validateCurrentStep()) {
+                return;
+            }
+            
+            // Update current step
+            currentStep = step;
+            
+            // Update steps visualization
+            steps.forEach(s => {
+                const stepNum = parseInt(s.dataset.step);
+                s.classList.remove('active', 'completed');
+                if (stepNum < step) {
+                    s.classList.add('completed');
+                } else if (stepNum === step) {
+                    s.classList.add('active');
+                }
+            });
+            
+            // Show/hide form containers
+            formContainers.forEach(container => {
+                container.classList.remove('active');
+                if (container.id === `step${step}`) {
+                    container.classList.add('active');
+                }
+            });
+            
+            // Update review information on step 3
+            if (step === 3) {
+                updateReviewInformation();
+            }
+            
+            // Scroll to top of form
+            document.querySelector('.right-panel').scrollTop = 0;
+            
+            // Show success message for step completion
+            if (step > 1) {
+                showNotification(`Step ${step - 1} completed!`, 'success');
+            }
+        }
+        
+        // Validate current step
+        function validateCurrentStep() {
+            let isValid = true;
+            let errorMsg = '';
+            
+            if (currentStep === 1) {
+                // Validate step 1 fields
+                if (!firstName.value.trim()) {
+                    isValid = false;
+                    errorMsg = 'Please enter your first name';
+                } else if (!lastName.value.trim()) {
+                    isValid = false;
+                    errorMsg = 'Please enter your last name';
+                } else if (!email.value.trim() || !isValidEmail(email.value)) {
+                    isValid = false;
+                    errorMsg = 'Please enter a valid email address';
+                } else if (!username.value.trim()) {
+                    isValid = false;
+                    errorMsg = 'Please choose a username';
+                } else if (existingUsernames.includes(username.value.trim())) {
+                    isValid = false;
+                    errorMsg = 'Username already exists';
+                } else if (!passwordInput.value) {
+                    isValid = false;
+                    errorMsg = 'Please create a password';
+                } else if (passwordInput.value.length < 6) {
+                    isValid = false;
+                    errorMsg = 'Password must be at least 6 characters';
+                } else if (passwordInput.value !== confirmPasswordInput.value) {
+                    isValid = false;
+                    errorMsg = 'Passwords do not match';
+                }
+            } else if (currentStep === 2) {
+                // Validate step 2 fields
+                if (!selectedRoleInput.value) {
+                    isValid = false;
+                    errorMsg = 'Please select a role';
+                }
+            }
+            
+            if (!isValid) {
+                showError(errorMsg);
+            } else {
+                hideError();
+            }
+            
+            return isValid;
+        }
+        
+        // Select role
+        function selectRole(role) {
+            // Update UI
+            roleOptions.forEach(option => {
+                option.classList.remove('selected');
+                if (option.dataset.role === role) {
+                    option.classList.add('selected');
+                }
+            });
+            
+            // Update hidden input
+            selectedRoleInput.value = role;
+            
+            // Show notification
+            showNotification(`${role.charAt(0).toUpperCase() + role.slice(1)} role selected`, 'success');
+        }
+        
+        // Toggle password visibility
+        function togglePasswordVisibility(inputElement, toggleElement) {
+            const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
+            inputElement.setAttribute('type', type);
+            toggleElement.innerHTML = type === 'password' ? 
+                '<i class="far fa-eye"></i>' : 
+                '<i class="far fa-eye-slash"></i>';
+        }
+        
+        // Check username availability
+        function checkUsernameAvailability() {
+            const user = username.value.trim();
+            if (!user) {
+                usernameAvailability.textContent = '';
+                usernameAvailability.style.color = '';
+                return;
+            }
+            
+            if (existingUsernames.includes(user)) {
+                usernameAvailability.textContent = '❌ Username already taken';
+                usernameAvailability.style.color = 'var(--warning)';
+            } else if (user.length < 3) {
+                usernameAvailability.textContent = '⚠️ Username must be at least 3 characters';
+                usernameAvailability.style.color = 'var(--manager)';
+            } else {
+                usernameAvailability.textContent = '✅ Username available';
+                usernameAvailability.style.color = 'var(--success)';
+            }
+        }
+        
+        // Check password strength
+        function checkPasswordStrength() {
+            const password = passwordInput.value;
+            let strength = 0;
+            
+            // Length check
+            if (password.length >= 6) strength += 1;
+            if (password.length >= 8) strength += 1;
+            
+            // Complexity checks
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            // Update UI
+            strengthFill.className = 'strength-fill';
+            
+            if (strength <= 2) {
+                passwordStrength.textContent = 'Weak';
+                passwordStrength.style.color = 'var(--warning)';
+                strengthFill.classList.add('strength-weak');
+            } else if (strength <= 4) {
+                passwordStrength.textContent = 'Medium';
+                passwordStrength.style.color = 'var(--manager)';
+                strengthFill.classList.add('strength-medium');
+            } else {
+                passwordStrength.textContent = 'Strong';
+                passwordStrength.style.color = 'var(--success)';
+                strengthFill.classList.add('strength-strong');
+            }
+            
+            // Also check password match
+            checkPasswordMatch();
+        }
+        
+        // Check password match
+        function checkPasswordMatch() {
+            if (!confirmPasswordInput.value) {
+                passwordMatch.textContent = '';
+                return;
+            }
+            
+            if (passwordInput.value === confirmPasswordInput.value) {
+                passwordMatch.textContent = '✅ Passwords match';
+                passwordMatch.style.color = 'var(--success)';
+            } else {
+                passwordMatch.textContent = '❌ Passwords do not match';
+                passwordMatch.style.color = 'var(--warning)';
+            }
+        }
+        
+        // Update review information
+        function updateReviewInformation() {
+            reviewName.textContent = `${firstName.value} ${lastName.value}`;
+            reviewEmail.textContent = email.value;
+            reviewPhone.textContent = phone.value || 'Not provided';
+            reviewUsername.textContent = username.value;
+            reviewRole.textContent = roleDescriptions[selectedRoleInput.value];
+            
+            // Store info
+            const store = storeName.value;
+            const type = storeType.value;
+            if (store || type) {
+                let storeInfo = '';
+                if (store) storeInfo += `Store: ${store}`;
+                if (type) storeInfo += `${store ? ' • ' : ''}Type: ${storeTypeDescriptions[type]}`;
+                reviewStoreInfo.textContent = storeInfo;
+            } else {
+                reviewStoreInfo.textContent = 'No store information provided';
+            }
+        }
+        
+        // Register user
+        function registerUser() {
+            // Validate final step
+            if (!validateCurrentStep()) {
+                return;
+            }
+            
+            // Check terms agreement
+            const termsCheckbox = document.getElementById('terms');
+            if (!termsCheckbox.checked) {
+                showError('You must agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // Simulate registration process
+            showSuccess('Creating your account...');
+            
+            // Disable register button
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // In a real application, you would send data to backend here
+                const userData = {
+                    firstName: firstName.value.trim(),
+                    lastName: lastName.value.trim(),
+                    email: email.value.trim(),
+                    phone: phone.value.trim(),
+                    username: username.value.trim(),
+                    password: passwordInput.value,
+                    role: selectedRoleInput.value,
+                    storeName: storeName.value.trim(),
+                    storeType: storeType.value,
+                    newsletter: document.getElementById('newsletter').checked
+                };
+                
+                // Save to localStorage (simulating backend storage)
+                const users = JSON.parse(localStorage.getItem('storesync_users') || '[]');
+                users.push(userData);
+                localStorage.setItem('storesync_users', JSON.stringify(users));
+                
+                // Show success message
+                showSuccess('Account created successfully! Redirecting to login...');
+                
+                // Redirect to login after delay
+                setTimeout(() => {
+                    window.location.href = 'index.html?registered=true&username=' + encodeURIComponent(userData.username);
+                }, 2000);
+                
+            }, 1500);
+        }
+        
+        // Show error message
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.style.display = 'flex';
+            errorMessage.style.animation = 'none';
+            setTimeout(() => {
+                errorMessage.style.animation = 'shake 0.5s ease';
+            }, 10);
+            
+            // Scroll to error
+            errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Hide error message
+        function hideError() {
+            errorMessage.style.display = 'none';
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            successText.textContent = message;
+            successMessage.style.display = 'flex';
+            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Show notification
+        function showNotification(message, type) {
+            const tip = document.createElement('div');
+            tip.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--primary)' : 'var(--admin)'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                font-size: 14px;
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            `;
+            tip.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(tip);
+            
+            setTimeout(() => {
+                tip.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => tip.remove(), 300);
+            }, 3000);
+        }
+        
+        // Validate email
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+        
+        // Show terms modal
+        function showTermsModal(e) {
+            e.preventDefault();
+            alert('Terms of Service\n\n1. You agree to use StoreSync for legitimate business purposes only.\n2. You are responsible for maintaining the security of your account.\n3. StoreSync reserves the right to modify these terms at any time.\n\nFull terms available at: terms.storesync.com');
+        }
+        
+        // Show privacy modal
+        function showPrivacyModal(e) {
+            e.preventDefault();
+            alert('Privacy Policy\n\n1. We collect only necessary information to provide our services.\n2. Your data is encrypted and stored securely.\n3. We never sell your personal information to third parties.\n\nFull policy available at: privacy.storesync.com');
+        }
+        
+        // Go to login page
+        function goToLogin(e) {
+            e.preventDefault();
+            window.location.href = 'index.html';
+        }
+        
+        // Initialize floating shapes
+        function initFloatingShapes() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach(shape => {
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                shape.style.left = `${randomX}%`;
+                shape.style.top = `${randomY}%`;
+                
+                // Random animation duration
+                const duration = 15 + Math.random() * 20;
+                shape.style.animationDuration = `${duration}s`;
+            });
+        }
+        
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // Check for registration success parameter
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('registered') && urlParams.get('registered') === 'true') {
+                const registeredUsername = urlParams.get('username');
+                showNotification(`Welcome ${registeredUsername}! Your account has been created.`, 'success');
+            }
+        });
+    </script>
+</body>
+</html>

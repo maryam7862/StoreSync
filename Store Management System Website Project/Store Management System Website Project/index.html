@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreSync - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --customer: #7209b7;
+            --manager: #f8961e;
+            --admin: #d90429;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .left-panel {
+            flex: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -80px;
+            left: -80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            z-index: 1;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .welcome-bid {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.5); }
+            to { text-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+        }
+
+        .welcome-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        /* Role Modules Section */
+        .role-modules {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 30px 0;
+            z-index: 1;
+        }
+
+        .role-module {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-module:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .role-module.active {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .role-module::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        .role-module.customer::before { background: var(--customer); }
+        .role-module.admin::before { background: var(--admin); }
+
+        .role-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .role-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 22px;
+        }
+
+        .customer .role-icon { background: var(--customer); }
+        .admin .role-icon { background: var(--admin); }
+
+        .role-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .role-description {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .role-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+        }
+
+        .stat i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .select-btn {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--dark);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .select-btn:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .role-selected {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+            opacity: 0.9;
+            display: none;
+        }
+
+        .role-selected i {
+            margin-right: 8px;
+            color: #4cc9f0;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-header {
+            margin-bottom: 40px;
+        }
+
+        .login-header h2 {
+            font-size: 32px;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: var(--gray);
+        }
+
+        .current-role-display {
+            background: var(--light);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border-left: 5px solid;
+            animation: slideInLeft 0.5s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .customer-display { border-left-color: var(--customer); }
+        .admin-display { border-left-color: var(--admin); }
+
+        .role-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .customer-badge { background: rgba(114, 9, 183, 0.1); color: var(--customer); }
+        .admin-badge { background: rgba(217, 4, 41, 0.1); color: var(--admin); }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .btn-login:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--gray);
+        }
+
+        .signup-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .demo-account {
+            background: #f0f5ff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--dark);
+        }
+
+        .demo-account strong {
+            color: var(--primary);
+        }
+
+        .error-message {
+            background: #ffe6e6;
+            color: var(--admin);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .error-message i {
+            margin-right: 10px;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .shape-1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            right: 10%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            bottom: 20%;
+            left: 5%;
+            animation: float 25s infinite linear reverse;
+        }
+
+        .shape-3 {
+            width: 60px;
+            height: 60px;
+            top: 50%;
+            left: 15%;
+            animation: float 18s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        .success-message {
+            background: #e7f7ef;
+            color: #06d6a0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-message i {
+            margin-right: 10px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .notification.success {
+            background: var(--success);
+            color: white;
+        }
+
+        .notification.info {
+            background: var(--primary);
+            color: white;
+        }
+
+        .notification.warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                margin: 20px;
+            }
+
+            .left-panel {
+                padding: 30px;
+            }
+
+            .right-panel {
+                padding: 30px;
+            }
+
+            .welcome-bid {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginPage">
+        <div class="left-panel">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div>
+                <div class="logo">
+                    <i class="fas fa-store"></i> StoreSync
+                </div>
+                
+                <div class="welcome-bid" id="welcomeText">
+                    Welcome to StoreSync
+                </div>
+                
+                <p class="welcome-subtitle">
+                    Choose your role to access the store management system
+                </p>
+
+                <!-- Role Modules -->
+                <div class="role-modules">
+                    <!-- Customer Module -->
+                    <div class="role-module customer active" data-role="customer">
+                        <div class="role-header">
+                            <div class="role-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <div class="role-title">Customer Portal</div>
+                                <div class="role-description">Browse products, track orders & manage wishlist</div>
+                            </div>
+                        </div>
+                        <div class="role-stats">
+                            <div class="stat">
+                                <i class="fas fa-shopping-cart"></i>
+                                <span>12K+ Orders</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-star"></i>
+                                <span>4.8 Rating</span>
+                            </div>
+                        </div>
+                        <button class="select-btn">Select Customer</button>
+                        <div class="role-selected">
+                            <i class="fas fa-check-circle"></i>
+                            Currently selected
+                        </div>
+                    </div>
+
+                    <!-- Admin Module -->
+                    <div class="role-module admin" data-role="admin">
+                        <div class="role-header">
+                            <div class="role-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <div>
+                                <div class="role-title">Admin Control Panel</div>
+                                <div class="role-description">Full system access & analytics</div>
+                            </div>
+                        </div>
+                        <div class="role-stats">
+                            <div class="stat">
+                                <i class="fas fa-users"></i>
+                                <span>7,334 Users</span>
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-server"></i>
+                                <span>99.8% Uptime</span>
+                            </div>
+                        </div>
+                        <button class="select-btn">Select Admin</button>
+                        <div class="role-selected">
+                            <i class="fas fa-check-circle"></i>
+                            Currently selected
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                © 2024 StoreSync Store Management System
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="login-header">
+                <h2>Login to StoreSync</h2>
+                <p>Access your store management dashboard</p>
+            </div>
+
+            <!-- Current Role Display -->
+            <div class="current-role-display customer-display" id="currentRoleDisplay">
+                <div class="role-badge customer-badge">CUSTOMER</div>
+                <div>
+                    <strong>Customer Portal Selected</strong>
+                    <div style="font-size: 14px; color: var(--gray);">Browse products and track your orders</div>
+                </div>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText">Incorrect username or password</span>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText">Login successful! Redirecting...</span>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        <span class="password-toggle" id="togglePassword">
+                            <i class="far fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginButton">
+                    <i class="fas fa-sign-in-alt"></i> Login as Customer
+                </button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="#" id="signupLink">Create Account Now</a>
+            </div>
+
+            <div class="demo-account">
+                <strong>Important Note:</strong><br>
+                You must register first to create an account. No demo accounts available.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const errorText = document.getElementById('errorText');
+        const successText = document.getElementById('successText');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const forgotPassword = document.getElementById('forgotPassword');
+        const signupLink = document.getElementById('signupLink');
+        const loginButton = document.getElementById('loginButton');
+        const welcomeText = document.getElementById('welcomeText');
+        const currentRoleDisplay = document.getElementById('currentRoleDisplay');
+        const roleModules = document.querySelectorAll('.role-module');
+        const selectButtons = document.querySelectorAll('.select-btn');
+
+        // User credentials database (empty initially - users must register first)
+        let userDatabase = {};
+
+        // Load registered users from localStorage
+        function loadRegisteredUsers() {
+            try {
+                const storedUsers = JSON.parse(localStorage.getItem('storesync_users') || '[]');
+                if (storedUsers.length === 0) {
+                    // Show message if no users are registered
+                    showNotification('No registered users found. Please register first.', 'warning');
+                }
+                storedUsers.forEach(user => {
+                    userDatabase[user.username] = {
+                        password: user.password,
+                        name: `${user.firstName} ${user.lastName}`,
+                        type: user.role,
+                        email: user.email
+                    };
+                });
+            } catch (e) {
+                console.log('No registered users found or error loading users');
+            }
+        }
+
+        // Current user type (default: customer)
+        let currentUserType = 'customer';
+
+        // Welcome messages for each role
+        const welcomeMessages = {
+            customer: "Welcome to StoreSync Customer Portal",
+            admin: "Welcome to StoreSync Admin Control"
+        };
+
+        // Role selection functionality
+        function selectRole(role) {
+            // Update current user type
+            currentUserType = role;
+            
+            // Update role modules
+            roleModules.forEach(module => {
+                module.classList.remove('active');
+                module.querySelector('.role-selected').style.display = 'none';
+                
+                if (module.dataset.role === role) {
+                    module.classList.add('active');
+                    module.querySelector('.role-selected').style.display = 'flex';
+                }
+            });
+            
+            // Update welcome text
+            welcomeText.textContent = welcomeMessages[role];
+            
+            // Update current role display
+            currentRoleDisplay.className = `current-role-display ${role}-display`;
+            currentRoleDisplay.querySelector('.role-badge').className = `role-badge ${role}-badge`;
+            currentRoleDisplay.querySelector('.role-badge').textContent = role.toUpperCase();
+            
+            // Update role description
+            const roleDescriptions = {
+                customer: 'Browse products and track your orders',
+                admin: 'Full system access and analytics'
+            };
+            currentRoleDisplay.querySelector('div > div').textContent = 
+                `${role.charAt(0).toUpperCase() + role.slice(1)} Portal Selected`;
+            currentRoleDisplay.querySelector('div > div + div').textContent = 
+                roleDescriptions[role];
+            
+            // Update login button text
+            loginButton.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login as ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+            
+            // Update placeholder
+            updatePlaceholder();
+        }
+
+        // Role button event listeners
+        selectButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const roleModule = this.closest('.role-module');
+                const role = roleModule.dataset.role;
+                selectRole(role);
+                
+                // Add animation effect
+                roleModule.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    roleModule.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.innerHTML = type === 'password' ? 
+                '<i class="far fa-eye"></i>' : 
+                '<i class="far fa-eye-slash"></i>';
+        });
+
+        // Update placeholder based on user type
+        function updatePlaceholder() {
+            const usernameField = document.getElementById('username');
+            usernameField.placeholder = `Enter your username`;
+        }
+
+       // Login form submission
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+
+    // Hide previous messages
+    errorMessage.style.display = 'none';
+    successMessage.style.display = 'none';
+
+    // Validate credentials
+    if (validateLogin(username, password)) {
+        // Get user data
+        const user = userDatabase[username];
+        
+        // Show success message
+        successText.textContent = `Welcome back, ${user.name}! Redirecting to ${user.type} dashboard...`;
+        successMessage.style.display = 'flex';
+
+        // Disable form
+        loginForm.querySelectorAll('input, button').forEach(el => {
+            el.disabled = true;
+        });
+
+        // Save current user to localStorage for session management
+        localStorage.setItem('storesync_current_user', JSON.stringify({
+            username: username,
+            name: user.name,
+            type: user.type,
+            email: user.email,
+            loginTime: new Date().toISOString()
+        }));
+
+        // Redirect to appropriate dashboard based on user type
+        setTimeout(() => {
+            if (user.type === 'customer') {
+                // Redirect to customer dashboard
+                window.location.href = 'customer_dashboard.html';
+            } else if (user.type === 'admin') {
+                // Redirect to admin dashboard
+                window.location.href = 'admin_dashboard.html';
+            } else {
+                // Default to customer dashboard
+                window.location.href = 'customer_dashboard.html';
+            }
+        }, 1500);
+
+    } else {
+        // Show error message
+        errorMessage.style.display = 'flex';
+
+        // Shake animation for error
+        errorMessage.style.animation = 'none';
+        setTimeout(() => {
+            errorMessage.style.animation = 'shake 0.5s ease';
+        }, 10);
+    }
+});
+        // Validate login credentials
+        function validateLogin(username, password) {
+            // Check if fields are empty
+            if (!username || !password) {
+                errorText.textContent = 'Please fill in all fields';
+                return false;
+            }
+
+            // Check if user exists in database
+            if (!userDatabase[username]) {
+                errorText.textContent = 'Username not found. Please register first.';
+                return false;
+            }
+
+            // Check if password matches
+            if (userDatabase[username].password !== password) {
+                errorText.textContent = 'Incorrect password';
+                return false;
+            }
+
+            // Check if user type matches selected type
+            if (userDatabase[username].type !== currentUserType) {
+                errorText.textContent = `Please select ${userDatabase[username].type} login type`;
+                return false;
+            }
+
+            return true;
+        }
+
+        // Forgot password functionality
+        forgotPassword.addEventListener('click', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            
+            if (username && userDatabase[username]) {
+                const user = userDatabase[username];
+                alert(`Password Reset Instructions\n\nUsername: ${username}\nEmail: ${user.email}\n\nA password reset link has been sent to your email address.`);
+            } else {
+                alert('Please enter your registered username first to reset password.');
+            }
+        });
+
+        // Signup link functionality - Show registration form
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showRegistrationForm();
+        });
+
+        // Show registration form function
+        function showRegistrationForm() {
+            const registrationHTML = `
+                <div id="registrationModal" style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 2000;
+                    animation: fadeIn 0.3s ease;
+                ">
+                    <div style="
+                        background: white;
+                        padding: 40px;
+                        border-radius: 20px;
+                        width: 90%;
+                        max-width: 500px;
+                        max-height: 90vh;
+                        overflow-y: auto;
+                        animation: slideInUp 0.5s ease;
+                    ">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                            <h2 style="color: var(--primary); margin: 0;">Create New Account</h2>
+                            <button id="closeRegistration" style="
+                                background: none;
+                                border: none;
+                                font-size: 24px;
+                                color: var(--gray);
+                                cursor: pointer;
+                            ">×</button>
+                        </div>
+                        
+                        <form id="registrationForm">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">First Name</label>
+                                    <input type="text" id="regFirstName" required style="
+                                        width: 100%;
+                                        padding: 12px;
+                                        border: 2px solid var(--light-gray);
+                                        border-radius: 10px;
+                                        font-size: 16px;
+                                    ">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 500;">Last Name</label>
+                                    <input type="text" id="regLastName" required style="
+                                        width: 100%;
+                                        padding: 12px;
+                                        border: 2px solid var(--light-gray);
+                                        border-radius: 10px;
+                                        font-size: 16px;
+                                    ">
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Email</label>
+                                <input type="email" id="regEmail" required style="
+                                    width: 100%;
+                                    padding: 12px;
+                                    border: 2px solid var(--light-gray);
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                ">
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Username</label>
+                                <input type="text" id="regUsername" required style="
+                                    width: 100%;
+                                    padding: 12px;
+                                    border: 2px solid var(--light-gray);
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                ">
+                                <small style="color: var(--gray); font-size: 12px;">Choose a unique username</small>
+                            </div>
+                            
+                            <div style="margin-bottom: 20px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Password</label>
+                                <input type="password" id="regPassword" required style="
+                                    width: 100%;
+                                    padding: 12px;
+                                    border: 2px solid var(--light-gray);
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                ">
+                                <small style="color: var(--gray); font-size: 12px;">Minimum 6 characters</small>
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Confirm Password</label>
+                                <input type="password" id="regConfirmPassword" required style="
+                                    width: 100%;
+                                    padding: 12px;
+                                    border: 2px solid var(--light-gray);
+                                    border-radius: 10px;
+                                    font-size: 16px;
+                                ">
+                            </div>
+                            
+                            <div style="margin-bottom: 25px;">
+                                <label style="display: block; margin-bottom: 8px; font-weight: 500;">Account Type</label>
+                                <div style="display: flex; gap: 10px;">
+                                    <label style="display: flex; align-items: center; cursor: pointer;">
+                                        <input type="radio" name="role" value="customer" checked style="margin-right: 8px;">
+                                        <span>Customer</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; cursor: pointer;">
+                                        <input type="radio" name="role" value="admin" style="margin-right: 8px;">
+                                        <span>Admin</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" style="
+                                width: 100%;
+                                padding: 16px;
+                                background: var(--primary);
+                                color: white;
+                                border: none;
+                                border-radius: 10px;
+                                font-size: 16px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+                            ">Create Account</button>
+                        </form>
+                        
+                        <div style="text-align: center; margin-top: 20px; color: var(--gray);">
+                            Already have an account? <a href="#" id="backToLogin" style="color: var(--primary); text-decoration: none;">Back to Login</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', registrationHTML);
+            
+            // Add event listeners for the modal
+            document.getElementById('closeRegistration').addEventListener('click', () => {
+                document.getElementById('registrationModal').remove();
+            });
+            
+            document.getElementById('backToLogin').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('registrationModal').remove();
+            });
+            
+            // Handle registration form submission
+            document.getElementById('registrationForm').addEventListener('submit', handleRegistration);
+        }
+
+        // Handle registration form submission
+        function handleRegistration(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('regFirstName').value.trim();
+            const lastName = document.getElementById('regLastName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+            
+            // Validation
+            if (!firstName || !lastName || !email || !username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if username already exists
+            const storedUsers = JSON.parse(localStorage.getItem('storesync_users') || '[]');
+            if (storedUsers.some(user => user.username === username)) {
+                alert('Username already exists. Please choose a different username.');
+                return;
+            }
+            
+            // Check if email already exists
+            if (storedUsers.some(user => user.email === email)) {
+                alert('Email already registered. Please use a different email.');
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                firstName,
+                lastName,
+                email,
+                username,
+                password,
+                role,
+                registrationDate: new Date().toISOString()
+            };
+            
+                        // Save to localStorage (persist the registered users)
+                        const existingStored = JSON.parse(localStorage.getItem('storesync_users') || '[]');
+                        existingStored.push(newUser);
+                        localStorage.setItem('storesync_users', JSON.stringify(existingStored));
+            // Update userDatabase
+            userDatabase[username] = {
+                password: password,
+                name: `${firstName} ${lastName}`,
+                type: role,
+                email: email
+            };
+            
+            // Close modal
+            document.getElementById('registrationModal').remove();
+            
+            // Show success message
+            showNotification(`Account created successfully! You can now login as ${username}.`, 'success');
+            
+            // Auto-fill login form
+            document.getElementById('username').value = username;
+            document.getElementById('password').value = password;
+            
+            // Auto-select role
+            selectRole(role);
+        }
+
+        // Show notification function
+        function showNotification(message, type) {
+            // Remove existing notifications
+            document.querySelectorAll('.notification').forEach(notif => notif.remove());
+            
+            const tip = document.createElement('div');
+            tip.className = `notification ${type}`;
+            tip.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-circle' : 'info-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(tip);
+            
+            setTimeout(() => {
+                tip.style.animation = 'slideInRight 0.3s ease reverse';
+                setTimeout(() => tip.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize floating shapes animation
+        function initFloatingShapes() {
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach(shape => {
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                shape.style.left = `${randomX}%`;
+                shape.style.top = `${randomY}%`;
+                
+                // Random animation duration
+                const duration = 15 + Math.random() * 20;
+                shape.style.animationDuration = `${duration}s`;
+            });
+        }
+
+        // Add some interactive effects
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('i').style.color = 'var(--primary)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.querySelector('i').style.color = 'var(--gray)';
+            });
+        });
+
+        // Check for successful registration parameter
+        function checkRegistrationSuccess() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('registered') && urlParams.get('registered') === 'true') {
+                const registeredUsername = urlParams.get('username');
+                showNotification(`Account created for ${registeredUsername}! Please login with your credentials.`, 'success');
+                
+                // Clear the URL parameters
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            initFloatingShapes();
+            updatePlaceholder();
+            
+            // Load registered users from localStorage
+            loadRegisteredUsers();
+            
+            // Check for successful registration
+            checkRegistrationSuccess();
+            
+            // Add enter key support
+            document.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && document.activeElement.tagName !== 'BUTTON') {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+
+        // Add responsive adjustments
+        window.addEventListener('resize', initFloatingShapes);
+    </script>
+</body>
+</html> 

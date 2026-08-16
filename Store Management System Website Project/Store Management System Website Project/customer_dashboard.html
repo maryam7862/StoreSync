@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoreSync - Customer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="customer_dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        .ai-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .ai-input input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .ai-input button {
+            background: white;
+            color: var(--customer);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .ai-input button:hover {
+            background: var(--light);
+            transform: scale(1.05);
+        }
+
+        /* Messages */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.success {
+            background: var(--success);
+            color: white;
+        }
+
+        .notification.error {
+            background: var(--warning);
+            color: white;
+        }
+
+        /* Empty States */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-header,
+            .dashboard-nav,
+            .dashboard-content {
+                padding: 20px;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .receipt-details {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .cart-item-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <div class="header-top">
+            <div class="logo">
+                <i class="fas fa-store"></i> StoreSync
+            </div>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">C</div>
+                <div>
+                    <div id="userName">Customer</div>
+                    <button class="logout-btn" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h1 class="dashboard-title">Customer Dashboard</h1>
+            <p class="dashboard-subtitle">Browse products, manage your cart, and place orders</p>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="dashboard-nav">
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-section="products">
+                <i class="fas fa-box"></i> Products
+            </button>
+            <button class="nav-tab" data-section="cart">
+                <i class="fas fa-shopping-cart"></i> Cart 
+                <span class="cart-count" id="cartCount">0</span>
+            </button>
+            <button class="nav-tab" data-section="place-order">
+                <i class="fas fa-shopping-bag"></i> Place Order
+            </button>
+            <button class="nav-tab" data-section="receipt">
+                <i class="fas fa-receipt"></i> Receipt
+            </button>
+            <button class="nav-tab" data-section="ai-assistant">
+                <i class="fas fa-robot"></i> AI Assistant
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Products Section -->
+        <section class="content-section active" id="products-section">
+            <h2>Available Products</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Cart Section -->
+        <section class="content-section" id="cart-section">
+            <div class="cart-container">
+                <div class="cart-header">
+                    <h2>Your Shopping Cart</h2>
+                    <button class="checkout-btn" id="proceedToCheckout">
+                        <i class="fas fa-arrow-right"></i> Proceed to Checkout
+                    </button>
+                </div>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your cart is empty</h3>
+                        <p>Add some products to get started</p>
+                    </div>
+                </div>
+                <div class="cart-summary" id="cartSummary" style="display: none;">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal">$0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="shipping">$5.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (10%)</span>
+                        <span id="tax">$0.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="total">$0.00</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Place Order Section -->
+        <section class="content-section" id="place-order-section">
+            <div class="order-form">
+                <h2>Place Your Order</h2>
+                <form id="orderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customerName">Full Name *</label>
+                            <input type="text" id="customerName" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customerPhone">Phone Number *</label>
+                            <input type="tel" id="customerPhone" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">Email Address *</label>
+                        <input type="email" id="customerEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shippingAddress">Shipping Address *</label>
+                        <textarea id="shippingAddress" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">Payment Method *</label>
+                        <select id="paymentMethod" class="form-control" required>
+                            <option value="">Select payment method</option>
+                            <option value="credit_card">Credit Card</option>
+                            <option value="debit_card">Debit Card</option>
+                            <option value="cash_on_delivery">Cash on Delivery</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="specialInstructions">Special Instructions (Optional)</label>
+                        <textarea id="specialInstructions" class="form-control" rows="2"></textarea>
+                    </div>
+                    <button type="submit" class="place-order-btn" id="placeOrderBtn">
+                        <i class="fas fa-check-circle"></i> Place Order
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Receipt Section -->
+        <section class="content-section" id="receipt-section">
+            <div class="receipt-container">
+                <h2>Order Receipt</h2>
+                <div class="receipt" id="receiptContent">
+                    <!-- Receipt will be loaded here -->
+                    <div class="empty-state">
+                        <i class="fas fa-receipt"></i>
+                        <h3>No receipt generated</h3>
+                        <p>Place an order to generate your receipt</p>
+                    </div>
+                </div>
+                <div class="receipt-actions" id="receiptActions" style="display: none;">
+                    <button class="receipt-btn download" onclick="downloadReceipt()">
+                        <i class="fas fa-download"></i> Download PDF
+                    </button>
+                    <button class="receipt-btn print" onclick="printReceipt()">
+                        <i class="fas fa-print"></i> Print Receipt
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Assistant Section -->
+        <section class="content-section" id="ai-assistant-section">
+            <div class="ai-assistant">
+                <div class="ai-header">
+                    <div class="ai-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="ai-content">
+                        <h3>StoreSync AI Assistant</h3>
+                        <p>Get personalized product recommendations and shopping assistance</p>
+                    </div>
+                </div>
+                
+                <div class="ai-recommendations">
+                    <div class="ai-recommendation" onclick="askAIRecommendation('best electronics')">
+                        Best Electronics
+                    </div>
+                    <div class="ai-recommendation" onclick="askAIRecommendation('trending fashion')">
+                        Trending Fashion
+                    </div>
+                    <div class="ai-recommendation" onclick="askAIRecommendation('home essentials')">
+                        Home Essentials
+                    </div>
+                    <div class="ai-recommendation" onclick="askAIRecommendation('gifts under $50')">
+                        Gifts under $50
+                    </div>
+                </div>
+
+                <div class="ai-input">
+                    <input type="text" id="aiQuery" placeholder="Ask me anything about products...">
+                    <button onclick="handleAIQuery()">
+                        <i class="fas fa-paper-plane"></i> Ask
+                    </button>
+                </div>
+
+                <div id="aiResponse" style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px; display: none;">
+                    <!-- AI responses will appear here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="customer_dashboard.js"></script>
