@@ -327,5 +327,11 @@ class StoreDatabase:
             "low_stock_items": low_stock
         }
 
-# Create database instance
-db = StoreDatabase()
+# Create database instance (handle Vercel/serverless environment)
+db = None
+try:
+    db = StoreDatabase()
+except Exception as e:
+    print(f"Warning: Could not initialize SQLite database: {e}")
+    print("This is normal on serverless platforms like Vercel without persistent storage.")
+    db = None
